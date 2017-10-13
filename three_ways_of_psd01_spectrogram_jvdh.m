@@ -45,7 +45,9 @@ hold on
 ylabel('PSD, µPa^2/Hz')
 xlabel('Frequency, Hz')
 figure(3)
-spectrogram(n,win,0,bins,sr,'yaxis')
+spectrogram(n,win,0,bins,sr,'yaxis') 
+% the color bar label on this is wrong
+% dB re: Pa squared per second 
 MG=get(get(gca,'children'),'CData');
 
 % shortcut way: use built-in spectrogram
@@ -53,7 +55,6 @@ M=abs(spectrogram(n,win,0,bins,sr)).^2/bins/sr*2/bias;
     % still have to square (not powers yet), divide by bins, divide by SR to get per Hz
     % divide by two because
     % divide by bias 
-    % notice subtraction of bias here.
 fn=[0:size(M,1)-1]/(size(M,1)-1)*sr/2;
 figure(1)
 axes(h)
@@ -63,3 +64,10 @@ line(xlim,10*log10(n0)*[1 1],'color','k')
 pos=get(h,'position');
 annotation('arrow',[pos(1)/2 pos(1)],pos(2)+(10*log10(n0)-min(ylim))/(diff(ylim))*pos(4)*[1 1])
 annotation('arrow',pos(1)+(tonefreq-min(xlim))/(diff(xlim))*pos(3)*[1 1],[pos(2)/2 pos(2)])
+
+% better frequency and temporal resolution using the full signal that is then chopped up
+% chopping up the signal before assessing frequency resolution is slightly
+% lower 
+% the frequency bins don't end up in the same place. The full fft gives
+% better time resolution and also knows limits of inference (can't get
+% frequency at 0 Hz)
