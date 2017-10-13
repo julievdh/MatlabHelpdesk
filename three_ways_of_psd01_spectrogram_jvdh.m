@@ -71,3 +71,6 @@ annotation('arrow',pos(1)+(tonefreq-min(xlim))/(diff(xlim))*pos(3)*[1 1],[pos(2)
 % the frequency bins don't end up in the same place. The full fft gives
 % better time resolution and also knows limits of inference (can't get
 % frequency at 0 Hz)
+
+%% testing git from within matlab
+plot([0 1],[1 0])
